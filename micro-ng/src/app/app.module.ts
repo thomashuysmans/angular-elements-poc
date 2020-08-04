@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, Injector } from '@angular/core';
+import { NgModule, Injector, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { createCustomElement } from '@angular/elements';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -18,9 +18,10 @@ import { HelloworldComponent } from './helloworld/helloworld.component';
     AppRoutingModule
   ],
   providers: [],
-  bootstrap: [],
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   entryComponents: [
-    AppComponent
+    HelloworldComponent
   ]
 })
 export class AppModule { 
@@ -28,10 +29,7 @@ export class AppModule {
   constructor(private injector: Injector) {}
 
   ngDoBootstrap() {
-    const { injector } = this;
-
-    const ngCustomElement = createCustomElement(AppComponent, {injector});
+    const ngCustomElement = createCustomElement(HelloworldComponent, {injector : this.injector});
     customElements.define("micro-ng", ngCustomElement);
   }
-
 }
